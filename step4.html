@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="hu">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MovieTailor – 4. lépés</title>
+    <style>
+      * { box-sizing: border-box; }
+      :root { --bento-bg:#1a120c; --bento-border:#3b2a1f; }
+
+      body { margin:0; font-family:Inter, Arial, sans-serif; background:#000; color:#fff; }
+
+      .hero {
+        position: relative;
+        isolation: isolate;
+        min-height: 50vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 24px;
+        gap: 20px;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content:'';
+        position:absolute;
+        inset:0;
+        background-image:linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.25)),url(https://i.postimg.cc/nL3RGjhj/hatteruj-novosz.png);
+        background-size:cover;
+        background-position:center;
+        opacity:.6;
+        z-index:-2;
+      }
+
+      .shiny-text {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 700;
+        background: linear-gradient(90deg, #ffffff 0%, #d1d1d1 50%, #ffffff 100%);
+        background-size: 200% auto;
+        color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        animation: shine 3s linear infinite;
+      }
+
+      .subtitle {
+        margin-top: 1.5rem;
+        font-size: clamp(1.75rem, 3.5vw, 2.6rem);
+        font-weight: 700;
+        line-height: 1.2;
+      }
+
+      .gradient-text {
+        background: linear-gradient(90deg, #9994b0, #c9c8bf);
+        background-size: 200% 200%;
+        color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        animation: gradient-flow 8s ease-in-out infinite alternate;
+      }
+
+      @keyframes gradient-flow {
+        0% { background-position: 0% 50%; }
+        100% { background-position: 100% 50%; }
+      }
+
+      @keyframes shine {
+        to { background-position: 200% center; }
+      }
+
+      .elegant-progress { position:absolute; bottom:0; left:0; width:100%; height:24px; background:rgba(255,255,255,.15); overflow:hidden; z-index:2; }
+      .elegant-progress .progress-bar { height:100%; width:0%; background:linear-gradient(90deg,#c7a77a,#f8f8ff); border-top-right-radius:12px; border-bottom-right-radius:12px; transition:width .4s ease; }
+
+      .form-section {
+        position:relative;
+        padding:80px 24px;
+        color:#2b2b2b;
+        background:
+          repeating-linear-gradient(90deg,rgba(0,0,0,.015) 0px,rgba(0,0,0,.015) 1px,transparent 1px,transparent 6px),
+          repeating-linear-gradient(0deg,rgba(0,0,0,.02) 0px,rgba(0,0,0,.02) 1px,transparent 1px,transparent 6px),
+          linear-gradient(180deg,#f5f1ea,#ebe5dc);
+      }
+
+      .form-section::before {
+        content:"";
+        position:absolute;
+        inset:0;
+        pointer-events:none;
+        background:radial-gradient(circle at 50% 0%,rgba(0,0,0,.05),transparent 60%);
+        opacity:.6;
+      }
+
+      .container { max-width:1400px; margin:0 auto; padding:0 24px; position:relative; z-index:1; }
+      .question-section { display:grid; grid-template-columns:minmax(260px,1fr) 760px; gap:48px; align-items:center; }
+      .question-text-block { display:flex; align-items:center; justify-content:center; }
+      .question-text-inner { width:100%; color:#2b2b2b; }
+      .question-copy-title { margin:0 0 18px 0; font-size:2rem; font-weight:700; line-height:1; text-align:center; letter-spacing:.5px; }
+      .question-copy-text { margin:0; font-size:1.25rem; line-height:1.7; text-align:center; color:#2f2b27; }
+      .question-cards { width:100%; }
+      .style-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; width:100%; }
+      .style-card { cursor:pointer; position:relative; padding:20px 10px 16px; border-radius:20px; border:1px solid var(--bento-border); background:var(--bento-bg); color:#fff; overflow:hidden; transition:transform .3s ease,box-shadow .3s ease; display:flex; flex-direction:column; align-items:center; }
+      .style-card:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(0,0,0,.35); }
+      .style-card.selected { border:1px solid #c7a77a; box-shadow:0 0 0 1px rgba(199,167,122,.35),0 10px 30px rgba(0,0,0,.45); }
+      .img-placeholder { width:65%; height:480px; max-width:440px; aspect-ratio:3/4; border-radius:14px; margin:0 auto 12px auto; display:flex; align-items:center; justify-content:center; background:repeating-linear-gradient(90deg,rgba(255,255,255,.02) 0px,rgba(255,255,255,.02) 1px,transparent 1px,transparent 4px),repeating-linear-gradient(0deg,rgba(0,0,0,.15) 0px,rgba(0,0,0,.15) 1px,transparent 1px,transparent 4px),linear-gradient(145deg,#2b1d14,#1a120c); border:1px solid rgba(199,167,122,.25); }
+      .img-placeholder img { display:block; width:100%; height:100%; object-fit:cover; border-radius:14px; }
+      .card-title { text-align:center; font-weight:500; margin:0; color:#f8f8ff; }
+      .nav-buttons { display:flex; justify-content:space-between; gap:24px; margin-top:64px; }
+      .nav-link { text-decoration:none; }
+      .nav-button { background:#2b1d14; color:#f5e6d3; padding:14px 28px; border-radius:12px; border:1px solid rgba(199,167,122,.35); cursor:pointer; transition:all .3s ease; font-weight:500; font-size:16px; letter-spacing:.5px; min-width:180px; text-align:center; }
+      .nav-button:hover { background:#3a2618; transform:scale(1.05); }
+
+      @media (max-width:1200px) {
+        .question-section { grid-template-columns:1fr; }
+        .question-text-block { margin-bottom:24px; }
+      }
+
+      @media (max-width:768px) {
+        .style-grid { grid-template-columns:1fr; }
+        .img-placeholder { width:85%; height:380px; }
+        .nav-buttons { flex-direction:column; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="hero">
+        <h1 class="shiny-text">MovieTailor</h1>
+        <p class="subtitle gradient-text">Fedezd fel a saját vizuális stílusodat.</p>
+        <div class="elegant-progress"><div class="progress-bar" id="formProgress"></div></div>
+      </section>
+
+      <section class="form-section">
+        <div class="container">
+          <div class="question-section">
+            <div class="question-text-block">
+              <div class="question-text-inner">
+                <h2 class="question-copy-title">IDŐÉRZÉKELÉS</h2>
+                <p class="question-copy-text">
+                  Melyik világot érzed közelebb magadhoz?<br><br>
+                  Az egyik időtálló, hagyományokra épülő eleganciát képvisel, míg a másik modern, letisztult és jövőorientált.<br><br>
+                  Válaszd azt, amelyik leginkább rezonál veled!
+                </p>
+              </div>
+            </div>
+
+            <div class="question-cards">
+              <div class="style-grid">
+                <div class="style-card" data-group="step4_q3" data-style="klasszikus">
+                  <div class="img-placeholder"><img src="https://i.postimg.cc/PrSW-Zmwf/Klasszikus-(1).png" alt="Klasszikus"></div>
+                  <p class="card-title">Klasszikus</p>
+                </div>
+                <div class="style-card" data-group="step4_q3" data-style="kortars">
+                  <div class="img-placeholder"><img src="https://i.postimg.cc/RV20jhr0/Korta-rs-(1).png" alt="Kortárs"></div>
+                  <p class="card-title">Kortárs</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="nav-buttons">
+            <a href="step3.html" class="nav-link"><button class="nav-button">Vissza</button></a>
+            <a href="step5.html" class="nav-link"><button class="nav-button">Tovább</button></a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const TOTAL_STEPS = 12;
+      const CURRENT_GROUP = 'step4_q3';
+
+      function restoreSelection() {
+        const savedValue = sessionStorage.getItem(CURRENT_GROUP);
+        if (!savedValue) return;
+        const card = document.querySelector(`.style-card[data-group="${CURRENT_GROUP}"][data-style="${savedValue}"]`);
+        if (card) card.classList.add('selected');
+      }
+
+      function updateProgress() {
+        const selected = document.querySelector(`.style-card.selected[data-group="${CURRENT_GROUP}"]`);
+        if (selected) sessionStorage.setItem(CURRENT_GROUP, selected.dataset.style || '');
+
+        const completedSteps =
+          (sessionStorage.getItem('step2_q1') ? 1 : 0) +
+          (sessionStorage.getItem('step3_q2') ? 1 : 0) +
+          (sessionStorage.getItem('step4_q3') ? 1 : 0) +
+          (sessionStorage.getItem('step5_q4') ? 1 : 0) +
+          (sessionStorage.getItem('step6_q5') ? 1 : 0) +
+          (sessionStorage.getItem('step7_q6') ? 1 : 0);
+
+        sessionStorage.setItem('progress_step_completed_total', String(completedSteps));
+
+        const indexCompleted = Number(sessionStorage.getItem('progress_index_completed') || 0);
+        document.getElementById('formProgress').style.width = `${((indexCompleted + completedSteps) / TOTAL_STEPS) * 100}%`;
+      }
+
+      document.querySelectorAll('.style-card').forEach(card => {
+        card.addEventListener('click', () => {
+          document.querySelectorAll(`.style-card[data-group="${CURRENT_GROUP}"]`).forEach(c => c.classList.remove('selected'));
+          card.classList.add('selected');
+          updateProgress();
+        });
+      });
+
+      restoreSelection();
+      updateProgress();
+    </script>
+  </body>
+</html>
