@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MovieTailor – 4. lépés</title>
     <style>
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
 
       :root {
         --bento-bg: #1a120c;
@@ -84,18 +82,12 @@
       }
 
       @keyframes gradient-flow {
-        0% {
-          background-position: 0% 50%;
-        }
-        100% {
-          background-position: 100% 50%;
-        }
+        0% { background-position: 0% 50%; }
+        100% { background-position: 100% 50%; }
       }
 
       @keyframes shine {
-        to {
-          background-position: 200% center;
-        }
+        to { background-position: 200% center; }
       }
 
       .elegant-progress {
@@ -123,20 +115,8 @@
         padding: 80px 24px;
         color: #2b2b2b;
         background:
-          repeating-linear-gradient(
-            90deg,
-            rgba(0, 0, 0, 0.015) 0px,
-            rgba(0, 0, 0, 0.015) 1px,
-            transparent 1px,
-            transparent 6px
-          ),
-          repeating-linear-gradient(
-            0deg,
-            rgba(0, 0, 0, 0.02) 0px,
-            rgba(0, 0, 0, 0.02) 1px,
-            transparent 1px,
-            transparent 6px
-          ),
+          repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.015) 0px, rgba(0, 0, 0, 0.015) 1px, transparent 1px, transparent 6px),
+          repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.02) 0px, rgba(0, 0, 0, 0.02) 1px, transparent 1px, transparent 6px),
           linear-gradient(180deg, #f5f1ea, #ebe5dc);
       }
 
@@ -192,13 +172,7 @@
         position: absolute;
         inset: 0;
         background:
-          repeating-linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.015) 0px,
-            rgba(255, 255, 255, 0.015) 1px,
-            transparent 1px,
-            transparent 6px
-          ),
+          repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 6px),
           linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.08));
         pointer-events: none;
       }
@@ -333,20 +307,8 @@
         align-items: center;
         justify-content: center;
         background:
-          repeating-linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.02) 0px,
-            rgba(255, 255, 255, 0.02) 1px,
-            transparent 1px,
-            transparent 4px
-          ),
-          repeating-linear-gradient(
-            0deg,
-            rgba(0, 0, 0, 0.15) 0px,
-            rgba(0, 0, 0, 0.15) 1px,
-            transparent 1px,
-            transparent 4px
-          ),
+          repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 4px),
+          repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15) 0px, rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 4px),
           linear-gradient(145deg, #2b1d14, #1a120c);
         border: 1px solid rgba(199, 167, 122, 0.16);
         padding: 5px;
@@ -387,9 +349,7 @@
         padding-top: 8px;
       }
 
-      .nav-link {
-        text-decoration: none;
-      }
+      .nav-link { text-decoration: none; }
 
       .nav-button {
         background: #2b1d14;
@@ -479,7 +439,6 @@
       <section class="hero">
         <h1 class="shiny-text">MovieTailor</h1>
         <p class="subtitle gradient-text">Fedezd fel a saját vizuális stílusodat.</p>
-
         <div class="elegant-progress">
           <div class="progress-bar" id="formProgress"></div>
         </div>
@@ -491,50 +450,38 @@
             <div class="question-text-block">
               <div class="question-panel">
                 <div class="question-text-inner">
-                  <h2 class="question-copy-title">SZOCIÁLIS ENERGIA</h2>
+                  <h2 class="question-copy-title">IDŐÉRZÉKELÉS</h2>
                   <p class="question-copy-text">
-                    Melyik társas jelenlét áll hozzád közelebb?<br /><br />
-                    Az egyik nyitottabb, közvetlenebb és könnyebben kapcsolódó, míg a másik
-                    inkább távolságtartóbb, zártabb és nehezebben hozzáférhető benyomást kelt.<br /><br />
-                    Válaszd azt, amelyik természetesebbnek érződik számodra!
+                    Melyik világot érzed közelebb magadhoz?<br /><br />
+                    Az egyik időtálló, hagyományokra épülő eleganciát képvisel, míg a másik modern, letisztult és jövőorientált.<br /><br />
+                    Válaszd azt, amelyik leginkább rezonál veled!
                   </p>
                 </div>
               </div>
             </div>
 
             <div class="question-card-column">
-              <div class="style-card" data-group="step4_q3" data-style="nyitott">
+              <div class="style-card" data-group="step4_q3" data-style="klasszikus">
                 <div class="img-placeholder">
-                  <img
-                    src="https://i.postimg.cc/0jSK8Z9m/Nyitott.png"
-                    alt="Nyitott"
-                  />
+                  <img src="https://i.postimg.cc/PrSW-Zmwf/Klasszikus-(1).png" alt="Klasszikus" />
                 </div>
-                <p class="card-title">Nyitott</p>
+                <p class="card-title">Klasszikus</p>
               </div>
             </div>
 
             <div class="question-card-column">
-              <div class="style-card" data-group="step4_q3" data-style="zart">
+              <div class="style-card" data-group="step4_q3" data-style="kortars">
                 <div class="img-placeholder">
-                  <img
-                    src="https://i.postimg.cc/HW7D0MT0/Zart.png"
-                    alt="Zárt"
-                  />
+                  <img src="https://i.postimg.cc/RV20jhr0/Korta-rs-(1).png" alt="Kortárs" />
                 </div>
-                <p class="card-title">Zárt</p>
+                <p class="card-title">Kortárs</p>
               </div>
             </div>
           </div>
 
           <div class="nav-buttons">
-            <a href="step3.html" class="nav-link">
-              <button class="nav-button">Vissza</button>
-            </a>
-
-            <a href="step5.html" class="nav-link">
-              <button class="nav-button">Tovább</button>
-            </a>
+            <a href="step3.html" class="nav-link"><button class="nav-button">Vissza</button></a>
+            <a href="step5.html" class="nav-link"><button class="nav-button">Tovább</button></a>
           </div>
         </div>
       </section>
@@ -602,10 +549,7 @@
 
         sessionStorage.setItem('progress_step_completed_total', String(completedSteps));
 
-        const indexCompleted = Number(
-          sessionStorage.getItem('progress_index_completed') || 0
-        );
-
+        const indexCompleted = Number(sessionStorage.getItem('progress_index_completed') || 0);
         document.getElementById('formProgress').style.width =
           `${((indexCompleted + completedSteps) / TOTAL_STEPS) * 100}%`;
 
