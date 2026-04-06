@@ -5,13 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MovieTailor – 4. lépés</title>
     <style>
-      * { box-sizing: border-box; }
+      * {
+        box-sizing: border-box;
+      }
 
       :root {
         --bento-bg: #1a120c;
         --bento-border: #3b2a1f;
         --card-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
         --card-shadow-hover: 0 22px 48px rgba(0, 0, 0, 0.32);
+        --gold-main: #c7a77a;
+        --gold-soft: rgba(199, 167, 122, 0.32);
+        --gold-glow: rgba(199, 167, 122, 0.18);
       }
 
       body {
@@ -79,12 +84,18 @@
       }
 
       @keyframes gradient-flow {
-        0% { background-position: 0% 50%; }
-        100% { background-position: 100% 50%; }
+        0% {
+          background-position: 0% 50%;
+        }
+        100% {
+          background-position: 100% 50%;
+        }
       }
 
       @keyframes shine {
-        to { background-position: 200% center; }
+        to {
+          background-position: 200% center;
+        }
       }
 
       .elegant-progress {
@@ -112,8 +123,20 @@
         padding: 80px 24px;
         color: #2b2b2b;
         background:
-          repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.015) 0px, rgba(0, 0, 0, 0.015) 1px, transparent 1px, transparent 6px),
-          repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.02) 0px, rgba(0, 0, 0, 0.02) 1px, transparent 1px, transparent 6px),
+          repeating-linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.015) 0px,
+            rgba(0, 0, 0, 0.015) 1px,
+            transparent 1px,
+            transparent 6px
+          ),
+          repeating-linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.02) 0px,
+            rgba(0, 0, 0, 0.02) 1px,
+            transparent 1px,
+            transparent 6px
+          ),
           linear-gradient(180deg, #f5f1ea, #ebe5dc);
       }
 
@@ -169,7 +192,13 @@
         position: absolute;
         inset: 0;
         background:
-          repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 6px),
+          repeating-linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.015) 0px,
+            rgba(255, 255, 255, 0.015) 1px,
+            transparent 1px,
+            transparent 6px
+          ),
           linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.08));
         pointer-events: none;
       }
@@ -224,7 +253,12 @@
         background: linear-gradient(180deg, #22170f 0%, #17100b 100%);
         color: #fff;
         overflow: hidden;
-        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease,
+          border-color 0.3s ease,
+          opacity 0.3s ease,
+          filter 0.3s ease;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -258,10 +292,35 @@
       }
 
       .style-card.selected {
-        border: 1px solid #c7a77a;
+        border-color: var(--gold-main);
         box-shadow:
-          0 0 0 1px rgba(199, 167, 122, 0.28),
+          0 0 0 1px var(--gold-soft),
+          0 0 0 4px rgba(199, 167, 122, 0.08),
           0 22px 48px rgba(0, 0, 0, 0.4);
+      }
+
+      .style-card.selected .img-placeholder {
+        border-color: var(--gold-main);
+        box-shadow:
+          0 0 0 1px rgba(199, 167, 122, 0.22),
+          0 0 24px var(--gold-glow);
+      }
+
+      .style-card.selected .card-title {
+        color: #fff4e6;
+      }
+
+      .style-card.locked {
+        cursor: not-allowed;
+        opacity: 0.55;
+        filter: saturate(0.88);
+        transform: none;
+      }
+
+      .style-card.locked:hover {
+        transform: none;
+        box-shadow: var(--card-shadow);
+        border-color: rgba(199, 167, 122, 0.18);
       }
 
       .img-placeholder {
@@ -274,13 +333,29 @@
         align-items: center;
         justify-content: center;
         background:
-          repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 4px),
-          repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15) 0px, rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 4px),
+          repeating-linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.02) 0px,
+            rgba(255, 255, 255, 0.02) 1px,
+            transparent 1px,
+            transparent 4px
+          ),
+          repeating-linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.15) 0px,
+            rgba(0, 0, 0, 0.15) 1px,
+            transparent 1px,
+            transparent 4px
+          ),
           linear-gradient(145deg, #2b1d14, #1a120c);
         border: 1px solid rgba(199, 167, 122, 0.16);
         padding: 5px;
         position: relative;
         z-index: 1;
+        transition:
+          border-color 0.3s ease,
+          box-shadow 0.3s ease,
+          transform 0.3s ease;
       }
 
       .img-placeholder img {
@@ -300,6 +375,7 @@
         letter-spacing: 0.4px;
         margin: 0;
         color: #f8f4ee;
+        transition: color 0.3s ease;
       }
 
       .nav-buttons {
@@ -311,7 +387,9 @@
         padding-top: 8px;
       }
 
-      .nav-link { text-decoration: none; }
+      .nav-link {
+        text-decoration: none;
+      }
 
       .nav-button {
         background: #2b1d14;
@@ -401,7 +479,10 @@
       <section class="hero">
         <h1 class="shiny-text">MovieTailor</h1>
         <p class="subtitle gradient-text">Fedezd fel a saját vizuális stílusodat.</p>
-        <div class="elegant-progress"><div class="progress-bar" id="formProgress"></div></div>
+
+        <div class="elegant-progress">
+          <div class="progress-bar" id="formProgress"></div>
+        </div>
       </section>
 
       <section class="form-section">
@@ -410,38 +491,50 @@
             <div class="question-text-block">
               <div class="question-panel">
                 <div class="question-text-inner">
-                  <h2 class="question-copy-title">IDŐÉRZÉKELÉS</h2>
+                  <h2 class="question-copy-title">SZOCIÁLIS ENERGIA</h2>
                   <p class="question-copy-text">
-                    Melyik világot érzed közelebb magadhoz?<br /><br />
-                    Az egyik időtálló, hagyományokra épülő eleganciát képvisel, míg a másik modern, letisztult és jövőorientált.<br /><br />
-                    Válaszd azt, amelyik leginkább rezonál veled!
+                    Melyik társas jelenlét áll hozzád közelebb?<br /><br />
+                    Az egyik nyitottabb, közvetlenebb és könnyebben kapcsolódó, míg a másik
+                    inkább távolságtartóbb, zártabb és nehezebben hozzáférhető benyomást kelt.<br /><br />
+                    Válaszd azt, amelyik természetesebbnek érződik számodra!
                   </p>
                 </div>
               </div>
             </div>
 
             <div class="question-card-column">
-              <div class="style-card" data-group="step4_q3" data-style="klasszikus">
+              <div class="style-card" data-group="step4_q3" data-style="nyitott">
                 <div class="img-placeholder">
-                  <img src="https://i.postimg.cc/PrSW-Zmwf/Klasszikus-(1).png" alt="Klasszikus" />
+                  <img
+                    src="https://i.postimg.cc/0jSK8Z9m/Nyitott.png"
+                    alt="Nyitott"
+                  />
                 </div>
-                <p class="card-title">Klasszikus</p>
+                <p class="card-title">Nyitott</p>
               </div>
             </div>
 
             <div class="question-card-column">
-              <div class="style-card" data-group="step4_q3" data-style="kortars">
+              <div class="style-card" data-group="step4_q3" data-style="zart">
                 <div class="img-placeholder">
-                  <img src="https://i.postimg.cc/RV20jhr0/Korta-rs-(1).png" alt="Kortárs" />
+                  <img
+                    src="https://i.postimg.cc/HW7D0MT0/Zart.png"
+                    alt="Zárt"
+                  />
                 </div>
-                <p class="card-title">Kortárs</p>
+                <p class="card-title">Zárt</p>
               </div>
             </div>
           </div>
 
           <div class="nav-buttons">
-            <a href="step3.html" class="nav-link"><button class="nav-button">Vissza</button></a>
-            <a href="step5.html" class="nav-link"><button class="nav-button">Tovább</button></a>
+            <a href="step3.html" class="nav-link">
+              <button class="nav-button">Vissza</button>
+            </a>
+
+            <a href="step5.html" class="nav-link">
+              <button class="nav-button">Tovább</button>
+            </a>
           </div>
         </div>
       </section>
@@ -451,19 +544,52 @@
       const TOTAL_STEPS = 12;
       const CURRENT_GROUP = 'step4_q3';
 
+      function getCards() {
+        return document.querySelectorAll(`.style-card[data-group="${CURRENT_GROUP}"]`);
+      }
+
+      function getSelectedCard() {
+        return document.querySelector(`.style-card.selected[data-group="${CURRENT_GROUP}"]`);
+      }
+
+      function applyLockedState() {
+        const selectedCard = getSelectedCard();
+        const cards = getCards();
+
+        cards.forEach((card) => {
+          card.classList.remove('locked');
+
+          if (selectedCard && card !== selectedCard) {
+            card.classList.add('locked');
+          }
+        });
+      }
+
       function restoreSelection() {
         const savedValue = sessionStorage.getItem(CURRENT_GROUP);
-        if (!savedValue) return;
-        const card = document.querySelector(`.style-card[data-group="${CURRENT_GROUP}"][data-style="${savedValue}"]`);
-        if (card) {
-          card.classList.add('selected');
+        if (!savedValue) {
+          applyLockedState();
+          return;
         }
+
+        const savedCard = document.querySelector(
+          `.style-card[data-group="${CURRENT_GROUP}"][data-style="${savedValue}"]`
+        );
+
+        if (savedCard) {
+          savedCard.classList.add('selected');
+        }
+
+        applyLockedState();
       }
 
       function updateProgress() {
-        const selected = document.querySelector(`.style-card.selected[data-group="${CURRENT_GROUP}"]`);
+        const selected = getSelectedCard();
+
         if (selected) {
           sessionStorage.setItem(CURRENT_GROUP, selected.dataset.style || '');
+        } else {
+          sessionStorage.removeItem(CURRENT_GROUP);
         }
 
         const completedSteps =
@@ -476,13 +602,30 @@
 
         sessionStorage.setItem('progress_step_completed_total', String(completedSteps));
 
-        const indexCompleted = Number(sessionStorage.getItem('progress_index_completed') || 0);
-        document.getElementById('formProgress').style.width = `${((indexCompleted + completedSteps) / TOTAL_STEPS) * 100}%`;
+        const indexCompleted = Number(
+          sessionStorage.getItem('progress_index_completed') || 0
+        );
+
+        document.getElementById('formProgress').style.width =
+          `${((indexCompleted + completedSteps) / TOTAL_STEPS) * 100}%`;
+
+        applyLockedState();
       }
 
-      document.querySelectorAll('.style-card').forEach(card => {
+      getCards().forEach((card) => {
         card.addEventListener('click', () => {
-          document.querySelectorAll(`.style-card[data-group="${CURRENT_GROUP}"]`).forEach(c => c.classList.remove('selected'));
+          const currentlySelected = getSelectedCard();
+
+          if (card.classList.contains('selected')) {
+            card.classList.remove('selected');
+            updateProgress();
+            return;
+          }
+
+          if (currentlySelected && currentlySelected !== card) {
+            return;
+          }
+
           card.classList.add('selected');
           updateProgress();
         });
