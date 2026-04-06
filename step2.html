@@ -12,6 +12,10 @@
       :root {
         --bento-bg: #1a120c;
         --bento-border: #3b2a1f;
+        --card-gold: rgba(199, 167, 122, 0.28);
+        --card-gold-strong: rgba(199, 167, 122, 0.42);
+        --card-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
+        --card-shadow-hover: 0 22px 48px rgba(0, 0, 0, 0.32);
       }
 
       body {
@@ -145,7 +149,7 @@
       }
 
       .container {
-        max-width: 1400px;
+        max-width: 1440px;
         margin: 0 auto;
         padding: 0 24px;
         position: relative;
@@ -154,58 +158,81 @@
 
       .question-section {
         display: grid;
-        grid-template-columns: minmax(280px, 1fr) 760px;
-        gap: 64px;
-        align-items: center;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 28px;
+        align-items: stretch;
       }
 
-      .question-text-block {
+      .question-text-block,
+      .question-card-column {
+        min-width: 0;
+      }
+
+      .question-panel {
+        height: 100%;
+        padding: 34px 30px;
+        border-radius: 22px;
+        border: 1px solid rgba(199, 167, 122, 0.2);
+        background: linear-gradient(180deg, #f8f3eb 0%, #efe7dc 100%);
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
         display: flex;
         align-items: center;
         justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .question-panel::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at top, rgba(255, 255, 255, 0.55), transparent 48%),
+          repeating-linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.012) 0px,
+            rgba(0, 0, 0, 0.012) 1px,
+            transparent 1px,
+            transparent 6px
+          );
+        pointer-events: none;
       }
 
       .question-text-inner {
         width: 100%;
-        color: #2b2b2b;
-        padding: 12px 0;
+        position: relative;
+        z-index: 1;
       }
 
       .question-copy-title {
-        margin: 0 0 20px 0;
-        font-size: clamp(2rem, 2.8vw, 2.7rem);
+        margin: 0 0 22px 0;
+        font-size: clamp(2rem, 2.4vw, 2.55rem);
         font-weight: 700;
         line-height: 1;
         text-align: center;
-        letter-spacing: 1.5px;
+        letter-spacing: 1.6px;
         color: #241a13;
       }
 
       .question-copy-text {
         margin: 0;
-        font-size: clamp(1.08rem, 1.4vw, 1.28rem);
-        line-height: 1.85;
+        font-size: clamp(1.06rem, 1.18vw, 1.18rem);
+        line-height: 1.88;
         text-align: center;
-        color: #3a342e;
-        max-width: 520px;
+        color: #3c352f;
+        max-width: 100%;
         margin-inline: auto;
       }
 
-      .question-cards {
-        width: 100%;
-      }
-
-      .style-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 24px;
-        width: 100%;
+      .question-card-column {
+        display: flex;
       }
 
       .style-card {
         cursor: pointer;
         position: relative;
-        padding: 22px 14px 18px;
+        width: 100%;
+        padding: 18px 10px 16px;
         border-radius: 22px;
         border: 1px solid rgba(199, 167, 122, 0.18);
         background: linear-gradient(180deg, #22170f 0%, #17100b 100%);
@@ -215,28 +242,38 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+        box-shadow: var(--card-shadow);
+        min-height: 100%;
+      }
+
+      .style-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at top, rgba(255, 255, 255, 0.06), transparent 38%),
+          linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.08));
+        pointer-events: none;
       }
 
       .style-card:hover {
         transform: translateY(-6px);
-        box-shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
+        box-shadow: var(--card-shadow-hover);
         border-color: rgba(199, 167, 122, 0.34);
       }
 
       .style-card.selected {
         border: 1px solid #c7a77a;
         box-shadow:
-          0 0 0 1px rgba(199, 167, 122, 0.32),
-          0 18px 42px rgba(0, 0, 0, 0.4);
+          0 0 0 1px rgba(199, 167, 122, 0.28),
+          0 22px 48px rgba(0, 0, 0, 0.4);
       }
 
       .img-placeholder {
-        width: 78%;
-        height: 500px;
-        max-width: 460px;
-        aspect-ratio: 3 / 4;
-        border-radius: 16px;
+        width: 90%;
+        height: 560px;
+        max-width: 100%;
+        border-radius: 14px;
         margin: 0 auto 16px auto;
         display: flex;
         align-items: center;
@@ -257,7 +294,10 @@
             transparent 4px
           ),
           linear-gradient(145deg, #2b1d14, #1a120c);
-        border: 1px solid rgba(199, 167, 122, 0.25);
+        border: 1px solid rgba(199, 167, 122, 0.2);
+        padding: 6px;
+        position: relative;
+        z-index: 1;
       }
 
       .img-placeholder img {
@@ -265,10 +305,12 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: 16px;
+        border-radius: 10px;
       }
 
       .card-title {
+        position: relative;
+        z-index: 1;
         text-align: center;
         font-weight: 600;
         font-size: 1.05rem;
@@ -314,10 +356,16 @@
       @media (max-width: 1200px) {
         .question-section {
           grid-template-columns: 1fr;
+          gap: 24px;
         }
 
-        .question-text-block {
-          margin-bottom: 24px;
+        .question-panel {
+          min-height: auto;
+        }
+
+        .img-placeholder {
+          width: 82%;
+          height: 520px;
         }
       }
 
@@ -328,13 +376,31 @@
           gap: 10px;
         }
 
-        .style-grid {
-          grid-template-columns: 1fr;
+        .subtitle {
+          margin: 0.7rem 0 0 0;
+        }
+
+        .form-section {
+          padding: 64px 18px;
+        }
+
+        .container {
+          padding: 0 8px;
+        }
+
+        .question-panel,
+        .style-card {
+          border-radius: 18px;
+        }
+
+        .question-panel {
+          padding: 26px 22px;
         }
 
         .img-placeholder {
-          width: 88%;
-          height: 400px;
+          width: 92%;
+          height: 430px;
+          padding: 5px;
         }
 
         .nav-buttons {
@@ -363,38 +429,40 @@
         <div class="container">
           <div class="question-section">
             <div class="question-text-block">
-              <div class="question-text-inner">
-                <h2 class="question-copy-title">DRAMATURGIA</h2>
-                <p class="question-copy-text">
-                  Hogyan szeretsz jelen lenni mások előtt?<br /><br />
-                  Az egyik megjelenés csendes, visszafogott erőt sugall, a másik
-                  erőteljesebb, azonnal észrevehető jelenlétet.<br /><br />
-                  Melyik tükrözi jobban azt, ahogyan hatni szeretnél?
-                </p>
+              <div class="question-panel">
+                <div class="question-text-inner">
+                  <h2 class="question-copy-title">DRAMATURGIA</h2>
+                  <p class="question-copy-text">
+                    Hogyan szeretsz jelen lenni mások előtt?<br /><br />
+                    Az egyik megjelenés csendes, visszafogott erőt sugall, a másik
+                    erőteljesebb, azonnal észrevehető jelenlétet.<br /><br />
+                    Melyik tükrözi jobban azt, ahogyan hatni szeretnél?
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div class="question-cards">
-              <div class="style-grid">
-                <div class="style-card" data-group="step2_q1" data-style="visszafogott">
-                  <div class="img-placeholder">
-                    <img
-                      src="https://i.postimg.cc/br8JVF43/Visszafogott-(1).png"
-                      alt="Visszafogott"
-                    />
-                  </div>
-                  <p class="card-title">Visszafogott</p>
+            <div class="question-card-column">
+              <div class="style-card" data-group="step2_q1" data-style="visszafogott">
+                <div class="img-placeholder">
+                  <img
+                    src="https://i.postimg.cc/br8JVF43/Visszafogott-(1).png"
+                    alt="Visszafogott"
+                  />
                 </div>
+                <p class="card-title">Visszafogott</p>
+              </div>
+            </div>
 
-                <div class="style-card" data-group="step2_q1" data-style="karizmatikus">
-                  <div class="img-placeholder">
-                    <img
-                      src="https://i.postimg.cc/3xyK1TdH/Karizmatikus.png"
-                      alt="Karizmatikus"
-                    />
-                  </div>
-                  <p class="card-title">Karizmatikus</p>
+            <div class="question-card-column">
+              <div class="style-card" data-group="step2_q1" data-style="karizmatikus">
+                <div class="img-placeholder">
+                  <img
+                    src="https://i.postimg.cc/3xyK1TdH/Karizmatikus.png"
+                    alt="Karizmatikus"
+                  />
                 </div>
+                <p class="card-title">Karizmatikus</p>
               </div>
             </div>
           </div>
