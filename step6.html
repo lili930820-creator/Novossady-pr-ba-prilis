@@ -12,6 +12,9 @@
         --bento-border: #3b2a1f;
         --card-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
         --card-shadow-hover: 0 22px 48px rgba(0, 0, 0, 0.32);
+        --gold-main: #c7a77a;
+        --gold-soft: rgba(199, 167, 122, 0.32);
+        --gold-glow: rgba(199, 167, 122, 0.18);
       }
 
       body {
@@ -224,7 +227,12 @@
         background: linear-gradient(180deg, #22170f 0%, #17100b 100%);
         color: #fff;
         overflow: hidden;
-        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease,
+          border-color 0.3s ease,
+          opacity 0.3s ease,
+          filter 0.3s ease;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -258,10 +266,35 @@
       }
 
       .style-card.selected {
-        border: 1px solid #c7a77a;
+        border-color: var(--gold-main);
         box-shadow:
-          0 0 0 1px rgba(199, 167, 122, 0.28),
+          0 0 0 1px var(--gold-soft),
+          0 0 0 4px rgba(199, 167, 122, 0.08),
           0 22px 48px rgba(0, 0, 0, 0.4);
+      }
+
+      .style-card.selected .img-placeholder {
+        border-color: var(--gold-main);
+        box-shadow:
+          0 0 0 1px rgba(199, 167, 122, 0.22),
+          0 0 24px var(--gold-glow);
+      }
+
+      .style-card.selected .card-title {
+        color: #fff4e6;
+      }
+
+      .style-card.locked {
+        cursor: not-allowed;
+        opacity: 0.55;
+        filter: saturate(0.88);
+        transform: none;
+      }
+
+      .style-card.locked:hover {
+        transform: none;
+        box-shadow: var(--card-shadow);
+        border-color: rgba(199, 167, 122, 0.18);
       }
 
       .img-placeholder {
@@ -281,6 +314,10 @@
         padding: 5px;
         position: relative;
         z-index: 1;
+        transition:
+          border-color 0.3s ease,
+          box-shadow 0.3s ease,
+          transform 0.3s ease;
       }
 
       .img-placeholder img {
@@ -300,6 +337,7 @@
         letter-spacing: 0.4px;
         margin: 0;
         color: #f8f4ee;
+        transition: color 0.3s ease;
       }
 
       .nav-buttons {
@@ -401,7 +439,9 @@
       <section class="hero">
         <h1 class="shiny-text">MovieTailor</h1>
         <p class="subtitle gradient-text">Fedezd fel a saját vizuális stílusodat.</p>
-        <div class="elegant-progress"><div class="progress-bar" id="formProgress"></div></div>
+        <div class="elegant-progress">
+          <div class="progress-bar" id="formProgress"></div>
+        </div>
       </section>
 
       <section class="form-section">
@@ -451,19 +491,52 @@
       const TOTAL_STEPS = 12;
       const CURRENT_GROUP = 'step6_q5';
 
+      function getCards() {
+        return document.querySelectorAll(`.style-card[data-group="${CURRENT_GROUP}"]`);
+      }
+
+      function getSelectedCard() {
+        return document.querySelector(`.style-card.selected[data-group="${CURRENT_GROUP}"]`);
+      }
+
+      function applyLockedState() {
+        const selectedCard = getSelectedCard();
+        const cards = getCards();
+
+        cards.forEach((card) => {
+          card.classList.remove('locked');
+
+          if (selectedCard && card !== selectedCard) {
+            card.classList.add('locked');
+          }
+        });
+      }
+
       function restoreSelection() {
         const savedValue = sessionStorage.getItem(CURRENT_GROUP);
-        if (!savedValue) return;
-        const card = document.querySelector(`.style-card[data-group="${CURRENT_GROUP}"][data-style="${savedValue}"]`);
-        if (card) {
-          card.classList.add('selected');
+        if (!savedValue) {
+          applyLockedState();
+          return;
         }
+
+        const savedCard = document.querySelector(
+          `.style-card[data-group="${CURRENT_GROUP}"][data-style="${savedValue}"]`
+        );
+
+        if (savedCard) {
+          savedCard.classList.add('selected');
+        }
+
+        applyLockedState();
       }
 
       function updateProgress() {
-        const selected = document.querySelector(`.style-card.selected[data-group="${CURRENT_GROUP}"]`);
+        const selected = getSelectedCard();
+
         if (selected) {
           sessionStorage.setItem(CURRENT_GROUP, selected.dataset.style || '');
+        } else {
+          sessionStorage.removeItem(CURRENT_GROUP);
         }
 
         const completedSteps =
@@ -477,12 +550,26 @@
         sessionStorage.setItem('progress_step_completed_total', String(completedSteps));
 
         const indexCompleted = Number(sessionStorage.getItem('progress_index_completed') || 0);
-        document.getElementById('formProgress').style.width = `${((indexCompleted + completedSteps) / TOTAL_STEPS) * 100}%`;
+        document.getElementById('formProgress').style.width =
+          `${((indexCompleted + completedSteps) / TOTAL_STEPS) * 100}%`;
+
+        applyLockedState();
       }
 
-      document.querySelectorAll('.style-card').forEach(card => {
+      getCards().forEach((card) => {
         card.addEventListener('click', () => {
-          document.querySelectorAll(`.style-card[data-group="${CURRENT_GROUP}"]`).forEach(c => c.classList.remove('selected'));
+          const currentlySelected = getSelectedCard();
+
+          if (card.classList.contains('selected')) {
+            card.classList.remove('selected');
+            updateProgress();
+            return;
+          }
+
+          if (currentlySelected && currentlySelected !== card) {
+            return;
+          }
+
           card.classList.add('selected');
           updateProgress();
         });
