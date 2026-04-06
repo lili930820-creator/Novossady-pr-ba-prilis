@@ -6,9 +6,20 @@
     <title>MovieTailor – 5. lépés</title>
     <style>
       * { box-sizing: border-box; }
-      :root { --bento-bg:#1a120c; --bento-border:#3b2a1f; }
 
-      body { margin:0; font-family:Inter, Arial, sans-serif; background:#000; color:#fff; }
+      :root {
+        --bento-bg: #1a120c;
+        --bento-border: #3b2a1f;
+        --card-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
+        --card-shadow-hover: 0 22px 48px rgba(0, 0, 0, 0.32);
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, Arial, sans-serif;
+        background: #000;
+        color: #fff;
+      }
 
       .hero {
         position: relative;
@@ -17,25 +28,28 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         text-align: center;
-        padding: 24px;
-        gap: 1px;
+        padding: 92px 24px 40px;
+        gap: 12px;
         overflow: hidden;
       }
 
       .hero::before {
-        content:'';
-        position:absolute;
-        inset:0;
-        background-image:linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,.25)),url(https://i.postimg.cc/nL3RGjhj/hatteruj-novosz.png);
-        background-size:cover;
-        background-position:center;
-        opacity:.6;
-        z-index:-2;
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
+          url(https://i.postimg.cc/nL3RGjhj/hatteruj-novosz.png);
+        background-size: cover;
+        background-position: center;
+        opacity: 0.6;
+        z-index: -2;
       }
 
-       .shiny-text {
+      .shiny-text {
+        margin: 0;
         font-size: clamp(3rem, 6vw, 5.5rem);
         font-weight: 700;
         background: linear-gradient(90deg, #ffffff 0%, #d1d1d1 50%, #ffffff 100%);
@@ -45,11 +59,11 @@
         background-clip: text;
         animation: shine 3s linear infinite;
         letter-spacing: 3px;
-  line-height: 1.05;
+        line-height: 1.05;
       }
 
       .subtitle {
-        margin-top: 0.2rem;
+        margin: 0.9rem 0 0 0;
         font-size: clamp(1.75rem, 3.5vw, 2.6rem);
         font-weight: 600;
         line-height: 1.2;
@@ -73,56 +87,312 @@
         to { background-position: 200% center; }
       }
 
-      .elegant-progress { position:absolute; bottom:0; left:0; width:100%; height:24px; background:rgba(255,255,255,.15); overflow:hidden; z-index:2; }
-      .elegant-progress .progress-bar { height:100%; width:0%; background:linear-gradient(90deg,#c7a77a,#f8f8ff); border-top-right-radius:12px; border-bottom-right-radius:12px; transition:width .4s ease; }
+      .elegant-progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 24px;
+        background: rgba(255, 255, 255, 0.15);
+        overflow: hidden;
+        z-index: 2;
+      }
+
+      .elegant-progress .progress-bar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #c7a77a, #f8f8ff);
+        border-top-right-radius: 12px;
+        border-bottom-right-radius: 12px;
+        transition: width 0.4s ease;
+      }
 
       .form-section {
-        position:relative;
-        padding:80px 24px;
-        color:#2b2b2b;
+        position: relative;
+        padding: 80px 24px;
+        color: #2b2b2b;
         background:
-          repeating-linear-gradient(90deg,rgba(0,0,0,.015) 0px,rgba(0,0,0,.015) 1px,transparent 1px,transparent 6px),
-          repeating-linear-gradient(0deg,rgba(0,0,0,.02) 0px,rgba(0,0,0,.02) 1px,transparent 1px,transparent 6px),
-          linear-gradient(180deg,#f5f1ea,#ebe5dc);
+          repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.015) 0px, rgba(0, 0, 0, 0.015) 1px, transparent 1px, transparent 6px),
+          repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.02) 0px, rgba(0, 0, 0, 0.02) 1px, transparent 1px, transparent 6px),
+          linear-gradient(180deg, #f5f1ea, #ebe5dc);
       }
 
       .form-section::before {
-        content:"";
-        position:absolute;
-        inset:0;
-        pointer-events:none;
-        background:radial-gradient(circle at 50% 0%,rgba(0,0,0,.05),transparent 60%);
-        opacity:.6;
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: radial-gradient(circle at 50% 0%, rgba(0, 0, 0, 0.05), transparent 60%);
+        opacity: 0.6;
       }
 
-      .container { max-width:1400px; margin:0 auto; padding:0 24px; position:relative; z-index:1; }
-      .question-section { display:grid; grid-template-columns:minmax(260px,1fr) 760px; gap:48px; align-items:center; }
-      .question-text-block { display:flex; align-items:center; justify-content:center; }
-      .question-text-inner { width:100%; color:#2b2b2b; }
-      .question-copy-title { margin:0 0 18px 0; font-size:2rem; font-weight:700; line-height:1; text-align:center; letter-spacing:.5px; }
-      .question-copy-text { margin:0; font-size:1.25rem; line-height:1.7; text-align:center; color:#2f2b27; }
-      .question-cards { width:100%; }
-      .style-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; width:100%; }
-      .style-card { cursor:pointer; position:relative; padding:20px 10px 16px; border-radius:20px; border:1px solid var(--bento-border); background:var(--bento-bg); color:#fff; overflow:hidden; transition:transform .3s ease,box-shadow .3s ease; display:flex; flex-direction:column; align-items:center; }
-      .style-card:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(0,0,0,.35); }
-      .style-card.selected { border:1px solid #c7a77a; box-shadow:0 0 0 1px rgba(199,167,122,.35),0 10px 30px rgba(0,0,0,.45); }
-      .img-placeholder { width:65%; height:480px; max-width:440px; aspect-ratio:3/4; border-radius:14px; margin:0 auto 12px auto; display:flex; align-items:center; justify-content:center; background:repeating-linear-gradient(90deg,rgba(255,255,255,.02) 0px,rgba(255,255,255,.02) 1px,transparent 1px,transparent 4px),repeating-linear-gradient(0deg,rgba(0,0,0,.15) 0px,rgba(0,0,0,.15) 1px,transparent 1px,transparent 4px),linear-gradient(145deg,#2b1d14,#1a120c); border:1px solid rgba(199,167,122,.25); }
-      .img-placeholder img { display:block; width:100%; height:100%; object-fit:cover; border-radius:14px; }
-      .card-title { text-align:center; font-weight:500; margin:0; color:#f8f8ff; }
-      .nav-buttons { display:flex; justify-content:space-between; gap:24px; margin-top:64px; }
-      .nav-link { text-decoration:none; }
-      .nav-button { background:#2b1d14; color:#f5e6d3; padding:14px 28px; border-radius:12px; border:1px solid rgba(199,167,122,.35); cursor:pointer; transition:all .3s ease; font-weight:500; font-size:16px; letter-spacing:.5px; min-width:180px; text-align:center; }
-      .nav-button:hover { background:#3a2618; transform:scale(1.05); }
-
-      @media (max-width:1200px) {
-        .question-section { grid-template-columns:1fr; }
-        .question-text-block { margin-bottom:24px; }
+      .container {
+        max-width: 1460px;
+        margin: 0 auto;
+        padding: 0 24px;
+        position: relative;
+        z-index: 1;
       }
 
-      @media (max-width:768px) {
-        .style-grid { grid-template-columns:1fr; }
-        .img-placeholder { width:85%; height:380px; }
-        .nav-buttons { flex-direction:column; }
+      .question-section {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 28px;
+        align-items: stretch;
+      }
+
+      .question-text-block,
+      .question-card-column {
+        min-width: 0;
+        display: flex;
+      }
+
+      .question-panel {
+        width: 100%;
+        min-height: 100%;
+        padding: 30px 28px;
+        border-radius: 22px;
+        border: 1px solid rgba(199, 167, 122, 0.2);
+        background:
+          radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 34%),
+          linear-gradient(180deg, #2b221c 0%, #1d1712 100%);
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .question-panel::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+          repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 6px),
+          linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.08));
+        pointer-events: none;
+      }
+
+      .question-panel::after {
+        content: '';
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 84px;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.12), transparent);
+        pointer-events: none;
+      }
+
+      .question-text-inner {
+        width: 100%;
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 100%;
+      }
+
+      .question-copy-title {
+        margin: 0 0 24px 0;
+        font-size: clamp(2rem, 2.4vw, 2.55rem);
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        letter-spacing: 1.6px;
+        color: #f3e8dc;
+      }
+
+      .question-copy-text {
+        margin: 0;
+        font-size: clamp(1.06rem, 1.18vw, 1.18rem);
+        line-height: 1.88;
+        text-align: center;
+        color: #ddd0c2;
+        max-width: 100%;
+        margin-inline: auto;
+      }
+
+      .style-card {
+        cursor: pointer;
+        position: relative;
+        width: 100%;
+        min-height: 100%;
+        padding: 16px 10px 16px;
+        border-radius: 22px;
+        border: 1px solid rgba(199, 167, 122, 0.18);
+        background: linear-gradient(180deg, #22170f 0%, #17100b 100%);
+        color: #fff;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        box-shadow: var(--card-shadow);
+      }
+
+      .style-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at top, rgba(255, 255, 255, 0.06), transparent 38%),
+          linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.08));
+        pointer-events: none;
+      }
+
+      .style-card::after {
+        content: '';
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 88px;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.12), transparent);
+        pointer-events: none;
+      }
+
+      .style-card:hover {
+        transform: translateY(-6px);
+        box-shadow: var(--card-shadow-hover);
+        border-color: rgba(199, 167, 122, 0.34);
+      }
+
+      .style-card.selected {
+        border: 1px solid #c7a77a;
+        box-shadow:
+          0 0 0 1px rgba(199, 167, 122, 0.28),
+          0 22px 48px rgba(0, 0, 0, 0.4);
+      }
+
+      .img-placeholder {
+        width: 92%;
+        height: 560px;
+        max-width: 100%;
+        border-radius: 14px;
+        margin: 0 auto 16px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background:
+          repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 4px),
+          repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15) 0px, rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 4px),
+          linear-gradient(145deg, #2b1d14, #1a120c);
+        border: 1px solid rgba(199, 167, 122, 0.16);
+        padding: 5px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .img-placeholder img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+
+      .card-title {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        font-weight: 600;
+        font-size: 1.05rem;
+        letter-spacing: 0.4px;
+        margin: 0;
+        color: #f8f4ee;
+      }
+
+      .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+        margin-top: 56px;
+        padding-top: 8px;
+      }
+
+      .nav-link { text-decoration: none; }
+
+      .nav-button {
+        background: #2b1d14;
+        color: #f5e6d3;
+        padding: 15px 30px;
+        border-radius: 14px;
+        border: 1px solid rgba(199, 167, 122, 0.35);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        font-size: 16px;
+        letter-spacing: 0.5px;
+        min-width: 190px;
+        text-align: center;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      }
+
+      .nav-button:hover {
+        background: #3a2618;
+        transform: scale(1.05);
+      }
+
+      @media (max-width: 1200px) {
+        .question-section {
+          grid-template-columns: 1fr;
+          gap: 24px;
+        }
+
+        .question-panel,
+        .style-card {
+          min-height: auto;
+        }
+
+        .img-placeholder {
+          width: 82%;
+          height: 520px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero {
+          min-height: 50vh;
+          padding: 72px 20px 36px;
+          gap: 10px;
+        }
+
+        .subtitle {
+          margin: 0.9rem 0 0 0;
+        }
+
+        .form-section {
+          padding: 64px 18px;
+        }
+
+        .container {
+          padding: 0 8px;
+        }
+
+        .question-panel,
+        .style-card {
+          border-radius: 18px;
+        }
+
+        .question-panel {
+          padding: 26px 22px;
+        }
+
+        .img-placeholder {
+          width: 92%;
+          height: 430px;
+          padding: 4px;
+        }
+
+        .nav-buttons {
+          flex-direction: column;
+        }
+
+        .nav-link,
+        .nav-button {
+          width: 100%;
+        }
       }
     </style>
   </head>
@@ -138,26 +408,33 @@
         <div class="container">
           <div class="question-section">
             <div class="question-text-block">
-              <div class="question-text-inner">
-                <h2 class="question-copy-title">SZOCIÁLIS ENERGIA</h2>
-                <p class="question-copy-text">
-                  Hol érzed magad igazán önazonosnak?<br><br>
-                  Az egyik világ inkább befeléforduló, nyugodt és fókuszált, míg a másik társas, jelenléttel teli és energikus.<br><br>
-                  Melyik illik jobban hozzád?
-                </p>
+              <div class="question-panel">
+                <div class="question-text-inner">
+                  <h2 class="question-copy-title">SZOCIÁLIS ENERGIA</h2>
+                  <p class="question-copy-text">
+                    Hol érzed magad igazán önazonosnak?<br /><br />
+                    Az egyik világ inkább befeléforduló, nyugodt és fókuszált, míg a másik társas, jelenléttel teli és energikus.<br /><br />
+                    Melyik illik jobban hozzád?
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div class="question-cards">
-              <div class="style-grid">
-                <div class="style-card" data-group="step5_q4" data-style="introvertalt">
-                  <div class="img-placeholder"><img src="https://i.postimg.cc/KzYFKhSx/Introverta-lt-(1).png" alt="Introvertált"></div>
-                  <p class="card-title">Introvertált</p>
+            <div class="question-card-column">
+              <div class="style-card" data-group="step5_q4" data-style="introvertalt">
+                <div class="img-placeholder">
+                  <img src="https://i.postimg.cc/KzYFKhSx/Introverta-lt-(1).png" alt="Introvertált" />
                 </div>
-                <div class="style-card" data-group="step5_q4" data-style="extrovertalt">
-                  <div class="img-placeholder"><img src="https://i.postimg.cc/fRjhBRMb/Ta-rsas.png" alt="Extrovertált"></div>
-                  <p class="card-title">Extrovertált</p>
+                <p class="card-title">Introvertált</p>
+              </div>
+            </div>
+
+            <div class="question-card-column">
+              <div class="style-card" data-group="step5_q4" data-style="extrovertalt">
+                <div class="img-placeholder">
+                  <img src="https://i.postimg.cc/fRjhBRMb/Ta-rsas.png" alt="Extrovertált" />
                 </div>
+                <p class="card-title">Extrovertált</p>
               </div>
             </div>
           </div>
@@ -178,12 +455,16 @@
         const savedValue = sessionStorage.getItem(CURRENT_GROUP);
         if (!savedValue) return;
         const card = document.querySelector(`.style-card[data-group="${CURRENT_GROUP}"][data-style="${savedValue}"]`);
-        if (card) card.classList.add('selected');
+        if (card) {
+          card.classList.add('selected');
+        }
       }
 
       function updateProgress() {
         const selected = document.querySelector(`.style-card.selected[data-group="${CURRENT_GROUP}"]`);
-        if (selected) sessionStorage.setItem(CURRENT_GROUP, selected.dataset.style || '');
+        if (selected) {
+          sessionStorage.setItem(CURRENT_GROUP, selected.dataset.style || '');
+        }
 
         const completedSteps =
           (sessionStorage.getItem('step2_q1') ? 1 : 0) +
