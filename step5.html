@@ -485,8 +485,8 @@
     <div class="sticky-progress-wrapper">
       <div class="sticky-progress-inner">
         <div class="sticky-progress-meta">
-          <strong>5. lépés / 12</strong>
-          <span>SZOCIÁLIS ENERGIA · jelenlét és kapcsolódás</span>
+          <strong id="progressStepText">5. lépés / 12</strong>
+          <span id="progressStepLabel">SZOCIÁLIS ENERGIA · jelenlét és kapcsolódás</span>
         </div>
 
         <div class="sticky-progress-track">
@@ -546,6 +546,18 @@
     <script>
       const TOTAL_STEPS = 12;
       const CURRENT_GROUP = 'step5_q4';
+
+      const progressStepText = document.getElementById('progressStepText');
+const progressStepLabel = document.getElementById('progressStepLabel');
+
+const STEP_LABELS = {
+  step2_q1: 'DRAMATURGIA · vizuális stílusirány',
+  step3_q2: 'FORMA & ENERGIA · szabás és anyaghatás',
+  step4_q3: 'IDŐÉRZÉKELÉS · klasszikus vagy kortárs világ',
+  step5_q4: 'SZOCIÁLIS ENERGIA · jelenlét és kapcsolódás',
+  step6_q5: 'TEXTÚRA & ÉRZÉKISÉG · vizuális mélység',
+  step7_q6: 'ASPIRÁCIÓ · vágyott státusz'
+};
 
       function getCards() {
         return document.querySelectorAll(`.style-card[data-group="${CURRENT_GROUP}"]`);
@@ -609,8 +621,19 @@
           sessionStorage.getItem('progress_index_completed') || 0
         );
 
-        const progressWidth = `${((indexCompleted + completedSteps) / TOTAL_STEPS) * 100}%`;
-        document.getElementById('stickyFormProgress').style.width = progressWidth;
+        const completedTotal = indexCompleted + completedSteps;
+const currentStepNumber = Math.min(completedTotal + 1, TOTAL_STEPS);
+const progressWidth = `${(completedTotal / TOTAL_STEPS) * 100}%`;
+
+document.getElementById('stickyFormProgress').style.width = progressWidth;
+
+if (progressStepText) {
+  progressStepText.textContent = `${currentStepNumber}. lépés / ${TOTAL_STEPS}`;
+}
+
+if (progressStepLabel) {
+  progressStepLabel.textContent = STEP_LABELS[CURRENT_GROUP] || 'Vizuális stílusirány';
+}
 
         applyLockedState();
       }
