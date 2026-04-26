@@ -6,9 +6,7 @@
     <title>MovieTailor</title>
 
     <style>
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
 
       :root {
         --bento-glow-rgb: 150, 110, 70;
@@ -101,9 +99,7 @@
         z-index: -2;
       }
 
-      .hero::after {
-        display: none;
-      }
+      .hero::after { display: none; }
 
       .shiny-text {
         margin: 0;
@@ -136,19 +132,12 @@
       }
 
       @keyframes gradient-flow {
-        0% {
-          background-position: 0% 50%;
-        }
-
-        100% {
-          background-position: 100% 50%;
-        }
+        0% { background-position: 0% 50%; }
+        100% { background-position: 100% 50%; }
       }
 
       @keyframes shine {
-        to {
-          background-position: 200% center;
-        }
+        to { background-position: 200% center; }
       }
 
       .form-section {
@@ -202,10 +191,6 @@
         display: grid;
         gap: 24px;
         flex: 0 0 auto;
-      }
-
-      .profile-intro .animated-block {
-        width: 100%;
       }
 
       .animated-block {
@@ -300,9 +285,7 @@
         font-weight: 500;
       }
 
-      .centered-file-name {
-        text-align: center;
-      }
+      .centered-file-name { text-align: center; }
 
       .cta-side {
         flex: 1;
@@ -312,9 +295,7 @@
         padding-right: 48px;
       }
 
-      .star-button-link {
-        text-decoration: none;
-      }
+      .star-button-link { text-decoration: none; }
 
       .star-button {
         background: linear-gradient(180deg, #2f2016 0%, #24180f 100%);
@@ -345,9 +326,7 @@
           gap: 40px;
         }
 
-        .profile-intro {
-          width: 100%;
-        }
+        .profile-intro { width: 100%; }
 
         .cta-side {
           padding-right: 0;
@@ -377,23 +356,15 @@
           gap: 10px;
         }
 
-        .container {
-          padding: 0 18px;
-        }
+        .container { padding: 0 18px; }
 
-        .animated-block {
-          padding: 22px;
-        }
+        .animated-block { padding: 22px; }
 
         .triple-row,
-        .upload-row {
-          grid-template-columns: 1fr;
-        }
+        .upload-row { grid-template-columns: 1fr; }
 
         .star-button,
-        .star-button-link {
-          width: 100%;
-        }
+        .star-button-link { width: 100%; }
       }
     </style>
   </head>
@@ -402,8 +373,8 @@
     <div class="sticky-progress-wrapper">
       <div class="sticky-progress-inner">
         <div class="sticky-progress-meta">
-          <strong>1. lépés / 12</strong>
-          <span>ALAPADATOK · profilindítás</span>
+          <strong id="progressStepText">1. lépés / 12</strong>
+          <span id="progressStepLabel">Név megadása</span>
         </div>
 
         <div class="sticky-progress-track">
@@ -479,9 +450,12 @@
     <script>
       const TOTAL_STEPS = 12;
 
+      const progressBar = document.getElementById('stickyFormProgress');
+      const progressStepText = document.getElementById('progressStepText');
+      const progressStepLabel = document.getElementById('progressStepLabel');
+
       const portraitInput = document.getElementById('portraitInput');
       const fileNameText = document.getElementById('fileNameText');
-      const progressBar = document.getElementById('stickyFormProgress');
       const goToStep2 = document.getElementById('goToStep2');
 
       const fields = {
@@ -491,6 +465,39 @@
         weight: document.getElementById('weight'),
         height: document.getElementById('height')
       };
+
+      const indexProgressSteps = [
+        {
+          key: 'form_name',
+          label: 'Név megadása',
+          isCompleted: () => fields.name.value.trim() !== ''
+        },
+        {
+          key: 'form_email',
+          label: 'E-mail cím megadása',
+          isCompleted: () => fields.email.value.trim() !== ''
+        },
+        {
+          key: 'form_age',
+          label: 'Életkor kiválasztása',
+          isCompleted: () => fields.age.value.trim() !== ''
+        },
+        {
+          key: 'form_weight',
+          label: 'Testsúly megadása',
+          isCompleted: () => fields.weight.value.trim() !== ''
+        },
+        {
+          key: 'form_height',
+          label: 'Magasság megadása',
+          isCompleted: () => fields.height.value.trim() !== ''
+        },
+        {
+          key: 'form_portrait',
+          label: 'Portré feltöltése',
+          isCompleted: () => sessionStorage.getItem('form_portrait') === '1'
+        }
+      ];
 
       if (!sessionStorage.getItem('flow_started')) {
         sessionStorage.clear();
@@ -512,26 +519,13 @@
         }
       }
 
-      function getCompletedIndexFields() {
-        let completed = 0;
-
-        if (fields.name.value.trim()) completed++;
-        if (fields.email.value.trim()) completed++;
-        if (fields.age.value.trim()) completed++;
-        if (fields.weight.value.trim()) completed++;
-        if (fields.height.value.trim()) completed++;
-        if (sessionStorage.getItem('form_portrait') === '1') completed++;
-
-        return completed;
+      function getCompletedIndexSteps() {
+        return indexProgressSteps.filter((step) => step.isCompleted()).length;
       }
 
-      function updateProgressBar(completed) {
-        const stepCompletedTotal = Number(
-          sessionStorage.getItem('progress_step_completed_total') || 0
-        );
-
-        const progressValue = ((completed + stepCompletedTotal) / TOTAL_STEPS) * 100;
-        progressBar.style.width = `${progressValue}%`;
+      function getCurrentIndexLabel() {
+        const firstIncompleteStep = indexProgressSteps.find((step) => !step.isCompleted());
+        return firstIncompleteStep ? firstIncompleteStep.label : 'Alapadatok kitöltve';
       }
 
       function saveIndexProgress() {
@@ -541,10 +535,21 @@
         sessionStorage.setItem('form_weight', fields.weight.value.trim());
         sessionStorage.setItem('form_height', fields.height.value.trim());
 
-        const completed = getCompletedIndexFields();
+        const completedIndexSteps = getCompletedIndexSteps();
 
-        sessionStorage.setItem('progress_index_completed', String(completed));
-        updateProgressBar(completed);
+        sessionStorage.setItem('progress_index_completed', String(completedIndexSteps));
+
+        const choiceStepsCompleted = Number(
+          sessionStorage.getItem('progress_step_completed_total') || 0
+        );
+
+        const completedTotal = completedIndexSteps + choiceStepsCompleted;
+        const currentStepNumber = Math.min(completedTotal + 1, TOTAL_STEPS);
+        const progressWidth = (completedTotal / TOTAL_STEPS) * 100;
+
+        progressBar.style.width = `${progressWidth}%`;
+        progressStepText.textContent = `${currentStepNumber}. lépés / ${TOTAL_STEPS}`;
+        progressStepLabel.textContent = getCurrentIndexLabel();
       }
 
       portraitInput.addEventListener('change', (event) => {
