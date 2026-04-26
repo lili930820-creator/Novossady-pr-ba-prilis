@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MovieTailor – 2. lépés</title>
     <style>
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
 
       :root {
         --bento-bg: #1a120c;
@@ -135,38 +133,12 @@
       }
 
       @keyframes gradient-flow {
-        0% {
-          background-position: 0% 50%;
-        }
-        100% {
-          background-position: 100% 50%;
-        }
+        0% { background-position: 0% 50%; }
+        100% { background-position: 100% 50%; }
       }
 
       @keyframes shine {
-        to {
-          background-position: 200% center;
-        }
-      }
-
-      .elegant-progress {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 24px;
-        background: rgba(255, 255, 255, 0.15);
-        overflow: hidden;
-        z-index: 2;
-      }
-
-      .elegant-progress .progress-bar {
-        height: 100%;
-        width: 0%;
-        background: linear-gradient(90deg, #c7a77a, #f8f8ff);
-        border-top-right-radius: 12px;
-        border-bottom-right-radius: 12px;
-        transition: width 0.4s ease;
+        to { background-position: 200% center; }
       }
 
       .form-section {
@@ -174,20 +146,8 @@
         padding: 80px 24px;
         color: #2b2b2b;
         background:
-          repeating-linear-gradient(
-            90deg,
-            rgba(0, 0, 0, 0.015) 0px,
-            rgba(0, 0, 0, 0.015) 1px,
-            transparent 1px,
-            transparent 6px
-          ),
-          repeating-linear-gradient(
-            0deg,
-            rgba(0, 0, 0, 0.02) 0px,
-            rgba(0, 0, 0, 0.02) 1px,
-            transparent 1px,
-            transparent 6px
-          ),
+          repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.015) 0px, rgba(0, 0, 0, 0.015) 1px, transparent 1px, transparent 6px),
+          repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.02) 0px, rgba(0, 0, 0, 0.02) 1px, transparent 1px, transparent 6px),
           linear-gradient(180deg, #f5f1ea, #ebe5dc);
       }
 
@@ -243,13 +203,7 @@
         position: absolute;
         inset: 0;
         background:
-          repeating-linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.015) 0px,
-            rgba(255, 255, 255, 0.015) 1px,
-            transparent 1px,
-            transparent 6px
-          ),
+          repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.015) 0px, rgba(255, 255, 255, 0.015) 1px, transparent 1px, transparent 6px),
           linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.08));
         pointer-events: none;
       }
@@ -384,20 +338,8 @@
         align-items: center;
         justify-content: center;
         background:
-          repeating-linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.02) 0px,
-            rgba(255, 255, 255, 0.02) 1px,
-            transparent 1px,
-            transparent 4px
-          ),
-          repeating-linear-gradient(
-            0deg,
-            rgba(0, 0, 0, 0.15) 0px,
-            rgba(0, 0, 0, 0.15) 1px,
-            transparent 1px,
-            transparent 4px
-          ),
+          repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 4px),
+          repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15) 0px, rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 4px),
           linear-gradient(145deg, #2b1d14, #1a120c);
         border: 1px solid rgba(199, 167, 122, 0.16);
         padding: 5px;
@@ -438,9 +380,7 @@
         padding-top: 8px;
       }
 
-      .nav-link {
-        text-decoration: none;
-      }
+      .nav-link { text-decoration: none; }
 
       .nav-button {
         background: #2b1d14;
@@ -559,10 +499,6 @@
       <section class="hero">
         <h1 class="shiny-text">MovieTailor</h1>
         <p class="subtitle gradient-text">Fedezd fel a saját vizuális stílusodat.</p>
-
-        <div class="elegant-progress">
-          <div class="progress-bar" id="formProgress"></div>
-        </div>
       </section>
 
       <section class="form-section">
@@ -574,7 +510,6 @@
                   <h2 class="question-copy-title">DRAMATURGIA</h2>
                   <p class="question-copy-text">
                     A dramaturgia ebben a kontextusban azt jelenti, hogy amikor megjelensz mások előtt, milyen a jelenléted és a viselkedésed.<br /><br />
-
                     Kérlek válaszd ki a két kép közül azt, amelyikről úgy gondolod, hogy a legjobban képviseli azt a megjelenést, ami hozzád közel áll!
                   </p>
                 </div>
@@ -584,10 +519,7 @@
             <div class="question-card-column">
               <div class="style-card" data-group="step2_q1" data-style="visszafogott">
                 <div class="img-placeholder">
-                  <img
-                    src="https://i.postimg.cc/Pf64sxdV/Chat-GPT-Image-vf.png"
-                    alt="Visszafogott"
-                  />
+                  <img src="https://i.postimg.cc/Pf64sxdV/Chat-GPT-Image-vf.png" alt="Visszafogott" />
                 </div>
                 <p class="card-title">Visszafogott</p>
               </div>
@@ -596,10 +528,7 @@
             <div class="question-card-column">
               <div class="style-card" data-group="step2_q1" data-style="karizmatikus">
                 <div class="img-placeholder">
-                  <img
-                    src="https://i.postimg.cc/VNc9B0FW/Chat-GPT-Image-2026-a-pr-12-22-50-13.png"
-                    alt="Karizmatikus"
-                  />
+                  <img src="https://i.postimg.cc/VNc9B0FW/Chat-GPT-Image-2026-a-pr-12-22-50-13.png" alt="Karizmatikus" />
                 </div>
                 <p class="card-title">Karizmatikus</p>
               </div>
@@ -607,13 +536,8 @@
           </div>
 
           <div class="nav-buttons">
-            <a href="index.html" class="nav-link">
-              <button class="nav-button">Vissza</button>
-            </a>
-
-            <a href="step3.html" class="nav-link">
-              <button class="nav-button">Tovább</button>
-            </a>
+            <a href="index.html" class="nav-link"><button class="nav-button">Vissza</button></a>
+            <a href="step3.html" class="nav-link"><button class="nav-button">Tovább</button></a>
           </div>
         </div>
       </section>
@@ -662,19 +586,6 @@
         applyLockedState();
       }
 
-      function setProgressWidth(progressWidth) {
-        const progressBars = [
-          document.getElementById('formProgress'),
-          document.getElementById('stickyFormProgress')
-        ];
-
-        progressBars.forEach((bar) => {
-          if (bar) {
-            bar.style.width = progressWidth;
-          }
-        });
-      }
-
       function updateProgress() {
         const selected = getSelectedCard();
 
@@ -700,7 +611,8 @@
 
         const progressWidth = `${((indexCompleted + completedSteps) / TOTAL_STEPS) * 100}%`;
 
-        setProgressWidth(progressWidth);
+        document.getElementById('stickyFormProgress').style.width = progressWidth;
+
         applyLockedState();
       }
 
