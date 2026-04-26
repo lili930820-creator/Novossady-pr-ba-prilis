@@ -24,6 +24,57 @@
         color: #fff;
       }
 
+      .sticky-progress-wrapper {
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        width: 100%;
+        background: rgba(18, 12, 8, 0.88);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(199, 167, 122, 0.22);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.24);
+      }
+
+      .sticky-progress-inner {
+        max-width: 1460px;
+        margin: 0 auto;
+        padding: 10px 48px 12px;
+      }
+
+      .sticky-progress-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 18px;
+        margin-bottom: 8px;
+        font-size: 0.86rem;
+        letter-spacing: 0.8px;
+        color: rgba(245, 230, 211, 0.82);
+      }
+
+      .sticky-progress-meta strong {
+        color: #fff4e6;
+        font-weight: 600;
+      }
+
+      .sticky-progress-track {
+        width: 100%;
+        height: 8px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.15);
+        overflow: hidden;
+      }
+
+      .sticky-progress-track .progress-bar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #c7a77a, #f8f8ff);
+        border-top-right-radius: 12px;
+        border-bottom-right-radius: 12px;
+        transition: width 0.4s ease;
+      }
+
       .hero {
         position: relative;
         isolation: isolate;
@@ -88,26 +139,6 @@
 
       @keyframes shine {
         to { background-position: 200% center; }
-      }
-
-      .elegant-progress {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 24px;
-        background: rgba(255, 255, 255, 0.15);
-        overflow: hidden;
-        z-index: 2;
-      }
-
-      .elegant-progress .progress-bar {
-        height: 100%;
-        width: 0%;
-        background: linear-gradient(90deg, #c7a77a, #f8f8ff);
-        border-top-right-radius: 12px;
-        border-bottom-right-radius: 12px;
-        transition: width 0.4s ease;
       }
 
       .form-section {
@@ -390,6 +421,21 @@
       }
 
       @media (max-width: 768px) {
+        .sticky-progress-inner {
+          padding: 9px 18px 11px;
+        }
+
+        .sticky-progress-meta {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 4px;
+          font-size: 0.76rem;
+        }
+
+        .sticky-progress-track {
+          height: 7px;
+        }
+
         .hero {
           min-height: 50vh;
           padding: 72px 20px 36px;
@@ -434,14 +480,25 @@
       }
     </style>
   </head>
+
   <body>
+    <div class="sticky-progress-wrapper">
+      <div class="sticky-progress-inner">
+        <div class="sticky-progress-meta">
+          <strong>7. lépés / 12</strong>
+          <span>ASPIRÁCIÓ · vágyott státusz</span>
+        </div>
+
+        <div class="sticky-progress-track">
+          <div class="progress-bar" id="stickyFormProgress"></div>
+        </div>
+      </div>
+    </div>
+
     <main>
       <section class="hero">
         <h1 class="shiny-text">MovieTailor</h1>
         <p class="subtitle gradient-text">Fedezd fel a saját vizuális stílusodat.</p>
-        <div class="elegant-progress">
-          <div class="progress-bar" id="formProgress"></div>
-        </div>
       </section>
 
       <section class="form-section">
@@ -549,9 +606,12 @@
 
         sessionStorage.setItem('progress_step_completed_total', String(completedSteps));
 
-        const indexCompleted = Number(sessionStorage.getItem('progress_index_completed') || 0);
-        document.getElementById('formProgress').style.width =
-          `${((indexCompleted + completedSteps) / TOTAL_STEPS) * 100}%`;
+        const indexCompleted = Number(
+          sessionStorage.getItem('progress_index_completed') || 0
+        );
+
+        const progressWidth = `${((indexCompleted + completedSteps) / TOTAL_STEPS) * 100}%`;
+        document.getElementById('stickyFormProgress').style.width = progressWidth;
 
         applyLockedState();
       }
